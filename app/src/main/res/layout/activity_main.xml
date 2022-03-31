@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choisir la date de départ:"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="94dp" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cliquez ici"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="180dp"
+        tools:layout_editor_absoluteY="86dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choisir la date de retour: "
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="143dp" />
+
+    <TextView
+        android:id="@+id/tv_date2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cliquez ici"
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="180dp"
+        tools:layout_editor_absoluteY="143dp" />
+
+    <TextView
+        android:id="@+id/tv_Lieu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lieu : "
+        android:textSize="20sp"
+        tools:layout_editor_absoluteX="180dp"
+        tools:layout_editor_absoluteY="143dp" />
+
+    <EditText
+        android:id="@+id/et_Lieu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".loginPage">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mot de passe:"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="223dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Entrez votre id journaliste"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="128dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="139dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="218dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:hint="Entrez votre mot de passe"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="173dp"
+        tools:layout_editor_absoluteY="200dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connexion"
+        tools:layout_editor_absoluteX="161dp"
+        tools:layout_editor_absoluteY="307dp" />
+</android.support.constraint.ConstraintLayout>
