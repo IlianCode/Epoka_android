@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loginPage">
+    tools:context=".loginPage"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mot de passe:"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="192dp" />
+        android:text="ID"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="139dp" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editTextUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -25,12 +28,12 @@
         tools:layout_editor_absoluteY="128dp" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ID"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="139dp" />
+        android:text="Mot de passe:"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="192dp" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
@@ -43,10 +46,11 @@
         tools:layout_editor_absoluteY="200dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_connexion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Connexion"
+        android:onClick="connexionTest"
         tools:layout_editor_absoluteX="161dp"
         tools:layout_editor_absoluteY="307dp" />
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
