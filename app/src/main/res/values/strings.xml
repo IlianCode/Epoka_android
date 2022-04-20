@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Epoka_android</string>
+
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+
+    </style>
+
 </resources>

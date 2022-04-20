@@ -16,6 +16,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+
     TextView tvDate;
     TextView tvDate2;
     DatePickerDialog.OnDateSetListener setListener;
@@ -89,10 +96,46 @@ public class MainActivity extends AppCompatActivity {
         tvSpinner = findViewById(R.id.tvSpinner);
         //tableau pour le spinner
         ArrayList<String> listeCommune = new ArrayList<>();
+        //appel de l'api
+
+        String url = "https://jsonplaceholder.typicode.com/posts";
+        JsonObjectRequest JsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                String title = null;
+
+                    try {
+                        title = response.getJSONObject("").getString("title");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    listeCommune.add(title);
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                listeCommune.add("error");
+                Log.d("TAG", error.toString());
+
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(JsonObjectRequest);
+
+
+
+
         //ajout de commune
         listeCommune.add("Choisir commune");
-        listeCommune.add("Grenoble");
-        listeCommune.add("Lyon");
+        listeCommune.add("Bourg-en-Bresse");
+        listeCommune.add("Saint-Denis-lès-Bourg");
+        listeCommune.add("Montmerle-sur-Saône");
+        listeCommune.add("Guéreins");
+        listeCommune.add("Montceaux");
+        listeCommune.add("Genouilleux");
 
         //set adaptater :
         spinner.setAdapter(new ArrayAdapter<>(MainActivity.this,
@@ -118,41 +161,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    // pour JSON
-    public String getServerdataJSON() {
-        InputStream is = null;
-        String data = "";
 
-        // Autoriser les opérations réseau sur le thread principal
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        try {
-            URL url = new URL("http://localhost:3000/api/communes");
-            HttpURLConnection connexion = (HttpURLConnection) url.openConnection();
-            connexion.connect();
-            is = connexion.getInputStream();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            data = br.readLine();
-        } catch (Exception expt) {
-            Log.e("log_tag", "Erreur pendant la récupération des données : " + expt.toString());
-        };
-        return (data);
-    }
-
-    /*public boolean isJSONValid(String test) {
-        try {
-            new JSONObject(test);
-        } catch (JSONException ex) {
-            // edited, to include @Arthur's comment
-            // e.g. in case JSONArray is valid as well...
-            try {
-                new JSONArray(test);
-            } catch (JSONException ex1) {
-                return false;
-            }
-        }
-        return true;
-    }*/
 }
