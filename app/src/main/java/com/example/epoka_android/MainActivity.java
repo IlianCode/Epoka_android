@@ -1,6 +1,7 @@
 package com.example.epoka_android;
 
 import android.app.DatePickerDialog;
+import android.app.VoiceInteractor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.StrictMode;
@@ -16,9 +17,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -39,18 +42,21 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvDate;
     TextView tvDate2;
+    TextView tv5;
     DatePickerDialog.OnDateSetListener setListener;
 
     //initialisation des variable de spinner
     Spinner spinner;
     TextView tvSpinner;
-    TextView textView6;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvDate = findViewById(R.id.tv_date);
         tvDate2 = findViewById(R.id.tv_date2);
+        tv5 = findViewById(R.id.textView5);
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
@@ -96,46 +102,52 @@ public class MainActivity extends AppCompatActivity {
         tvSpinner = findViewById(R.id.tvSpinner);
         //tableau pour le spinner
         ArrayList<String> listeCommune = new ArrayList<>();
+
+
+
+        String url = "http://192.168.1.5:3000/api/communes";
         //appel de l'api
+        RequestQueue requestQueue = Volley.newRequestQueue( this);
 
-        String url = "https://jsonplaceholder.typicode.com/posts";
-        JsonObjectRequest JsonObjectRequest = new JsonObjectRequest(url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                String title = null;
+        JsonArrayRequest getRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("Rest response ", response.toString());
 
-                    try {
-                        title = response.getJSONObject("").getString("title");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        for (int i = 0; i < response.length(); ++i) {
+                            JSONObject rec = null;
+                            try {
+                                rec = response.getJSONObject(i);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                String nom = rec.getString("co_nom");
+                                listeCommune.add(nom);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
                     }
-                    listeCommune.add(title);
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Rest response ", error.toString());
 
+                    }
+                }
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                listeCommune.add("error");
-                Log.d("TAG", error.toString());
+        );
+        //appel de la requete
+        requestQueue.add(getRequest);
 
-            }
-        });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(JsonObjectRequest);
-
-
-
-
-        //ajout de commune
-        listeCommune.add("Choisir commune");
-        listeCommune.add("Bourg-en-Bresse");
-        listeCommune.add("Saint-Denis-lès-Bourg");
-        listeCommune.add("Montmerle-sur-Saône");
-        listeCommune.add("Guéreins");
-        listeCommune.add("Montceaux");
-        listeCommune.add("Genouilleux");
 
         //set adaptater :
         spinner.setAdapter(new ArrayAdapter<>(MainActivity.this,
@@ -160,6 +172,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
+
+
 
 }
