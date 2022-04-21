@@ -1,10 +1,8 @@
 package com.example.epoka_android;
 
 import android.app.DatePickerDialog;
-import android.app.VoiceInteractor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,19 +19,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -101,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         spinner=findViewById(R.id.spinner);
         tvSpinner = findViewById(R.id.tvSpinner);
         //tableau pour le spinner
-        ArrayList<String> listeCommune = new ArrayList<>();
+        ArrayList<getSpinner> listeCommune = new ArrayList<>();
 
 
 
@@ -122,12 +112,14 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject rec = null;
                             try {
                                 rec = response.getJSONObject(i);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                             try {
                                 String nom = rec.getString("co_nom");
-                                listeCommune.add(nom);
+                                Integer id = rec.getInt("co_id");
+                                listeCommune.add(new getSpinner(nom, id));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -175,6 +167,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public class getSpinner
+    {
+        private String displayValue;
+        private int hiddenValue;
 
+        // Constructeur
+        public getSpinner(String d, Integer h)
+        {
+            displayValue = d;
+            hiddenValue = h;
+        }
 
+        // Accesseur
+        public int HiddenValue()
+        {
+                return hiddenValue;
+        }
+
+        // Override de la fonction  ToString
+        @Override
+        public  String toString()
+        {
+            return displayValue;
+        }
+    }
+
+    public void ewi(View view){
+        String s = String.valueOf(((getSpinner)spinner.getSelectedItem()).HiddenValue());
+        Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+
+    }
 }
