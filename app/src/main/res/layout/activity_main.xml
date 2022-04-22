@@ -58,6 +58,7 @@
         android:layout_marginBottom="428dp"
         android:text="Cliquez ici"
         android:textSize="20sp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -93,17 +94,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="88dp"
         android:layout_marginTop="427dp"
+        android:onClick="addMission"
         android:text="Ajouter une mission"
-        android:onClick="ewi"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="386dp"
-        android:layout_height="35dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="25dp"
-        tools:layout_editor_absoluteY="527dp" />
+
 
 </android.support.constraint.ConstraintLayout>

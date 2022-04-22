@@ -25,14 +25,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends  loginPage {
 
     TextView tvDate;
     TextView tvDate2;
-    TextView tv5;
     DatePickerDialog.OnDateSetListener setListener;
 
     //initialisation des variable de spinner
@@ -46,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tvDate = findViewById(R.id.tv_date);
         tvDate2 = findViewById(R.id.tv_date2);
-        tv5 = findViewById(R.id.textView5);
         Calendar calendar = Calendar.getInstance();
+
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -67,8 +68,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
                 month = month+1;
-                String date = day+"/"+month+"/"+year;
-                tvDate.setText(date);
+                String dateD = day+"/"+month+"/"+year;
+                String dateH = year+"-"+month+"-"+day;
+                globalVariable.dateDebut = new getDate(dateD, dateH);
+
+                tvDate.setText(globalVariable.dateDebut.displayValue);
             }
         };
         tvDate2.setOnClickListener(new View.OnClickListener() {
@@ -79,8 +83,10 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                         month = month+1;
-                        String date = day+"/"+month+"/"+year;
-                        tvDate2.setText(date);
+                        String date2D = day+"/"+month+"/"+year;
+                        String date2H = year+"-"+month+"-"+day;
+                        globalVariable.dateFin = new getDate(date2D, date2H);
+                        tvDate2.setText(globalVariable.dateFin.displayValue);
                     }
                 },year,month,day);
                 datePickerDialog.show();
@@ -94,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<getSpinner> listeCommune = new ArrayList<>();
 
 
+        //=============
+        //requete pouir remplir le spinner avec les differentes communes
 
         String url = "http://192.168.1.5:3000/api/communes";
         //appel de l'api
@@ -107,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.e("Rest response ", response.toString());
-
+                        listeCommune.add(new getSpinner("Choisir une commune", 0));
                         for (int i = 0; i < response.length(); ++i) {
                             JSONObject rec = null;
                             try {
@@ -123,8 +131,6 @@ public class MainActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
                         }
                     }
                 },
@@ -132,15 +138,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Rest response ", error.toString());
-
                     }
                 }
 
         );
-        //appel de la requete
+        //execution de l'appel de la requete
         requestQueue.add(getRequest);
 
-
+        // creation et remplissage du searchable spinner
         //set adaptater :
         spinner.setAdapter(new ArrayAdapter<>(MainActivity.this,
                 android.R.layout.simple_spinner_dropdown_item,listeCommune));
@@ -166,7 +171,39 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    public void addMission(View view){
+        //=============
 
+
+        String url = "http://192.168.1.5:3000/api/mission/"+globalVariable.dateDebut.HiddenValue()+"/"+globalVariable.dateFin.HiddenValue()+"/0/0/"+globalVariable.salarieId+"/"+((getSpinner)spinner.getSelectedItem()).HiddenValue()+"/"+globalVariable.salarieCommuneAgence;
+
+        //appel de l'api
+        RequestQueue requestQueue = Volley.newRequestQueue( this);
+
+        JsonArrayRequest getRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.e("Rest response ", response.toString());
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Rest response ", error.toString());
+                    }
+                }
+
+        );
+        //execution de l'appel de la requete
+        requestQueue.add(getRequest);
+        Toast.makeText(getApplicationContext(), "Mission correctement envoyée", Toast.LENGTH_SHORT).show();
+
+    }
     public class getSpinner
     {
         private String displayValue;
@@ -192,10 +229,32 @@ public class MainActivity extends AppCompatActivity {
             return displayValue;
         }
     }
+    //creation d'une classe pour avoir une date affichée et une date cachée a envoyer a l'api
+    public static class getDate
+    {
+        private String displayValue;
+        private String hiddenValue;
 
-    public void ewi(View view){
-        String s = String.valueOf(((getSpinner)spinner.getSelectedItem()).HiddenValue());
-        Toast.makeText(getApplicationContext(),s,Toast.LENGTH_SHORT).show();
+        // Constructeur
+        public getDate(String d, String h)
+        {
+            displayValue = d;
+            hiddenValue = h;
+        }
 
+        // Accesseur
+        public String HiddenValue()
+        {
+            return hiddenValue;
+        }
+
+        // Override de la fonction  ToString
+        @Override
+        public  String toString()
+        {
+            return displayValue;
+        }
     }
+
+
 }
