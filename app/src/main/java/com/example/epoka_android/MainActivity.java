@@ -176,6 +176,7 @@ public class MainActivity extends  loginPage {
 
 
         String url = "http://192.168.1.5:3000/api/mission/"+globalVariable.dateDebut.HiddenValue()+"/"+globalVariable.dateFin.HiddenValue()+"/0/0/"+globalVariable.salarieId+"/"+((getSpinner)spinner.getSelectedItem()).HiddenValue()+"/"+globalVariable.salarieCommuneAgence;
+        Log.e("fez", url);
 
         //appel de l'api
         RequestQueue requestQueue = Volley.newRequestQueue( this);
@@ -202,7 +203,6 @@ public class MainActivity extends  loginPage {
         //execution de l'appel de la requete
         requestQueue.add(getRequest);
         Toast.makeText(getApplicationContext(), "Mission correctement envoyée", Toast.LENGTH_SHORT).show();
-
     }
     public class getSpinner
     {
