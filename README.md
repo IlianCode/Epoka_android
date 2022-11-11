@@ -4,5 +4,5 @@ Partie android de l'application EPOKA, développée dans le cadre de l'épreuve 
 Epoka est une application fictive permettant à des journalite de saisir leurs déplacement professionnel afin de se faire rembourser leurs frais kilométrique. <br>
 <br>
 Cette application possède une version Android permettant au journaliste de saisir un déplacement ainsi qu'une version web permettant aux équipes admnistratives de l'agence de journalisme de gérer les différents paramètres de l'application.
-<br>
+<br> <br>
 Lien du repository de l'application web EPOKA : https://github.com/IlianCode/Epoka_Project
